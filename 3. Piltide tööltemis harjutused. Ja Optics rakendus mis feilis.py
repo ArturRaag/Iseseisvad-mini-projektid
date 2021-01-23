@@ -115,12 +115,4 @@ def ThinFilm():
     uus=Image.new("RGB",suurus,"rgb"+str(tuple(varvid)))
     uus.show()
     del pilt
-def listimine():
-    x="hi"
-    y="Bye"
-    list1=[]
-    list1.append(y)
-    list1.append(x)
-    
-    print(list1)
     
