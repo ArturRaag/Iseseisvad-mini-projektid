@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb 18 03:38:54 2021
 
-@author: artur
-"""
-
+import time
 import numpy as np
+
+start=time.time()
 tähestik=list("abcdefghijklmnopqrsšžztuvwõäöüxy")
-password="xx"
+password="pass"
 pakkumine=""
 loendaja=0
 while password!=pakkumine:
@@ -19,4 +16,7 @@ while password!=pakkumine:
         pakkumine_uus.append(i)
     pakkumine="".join(pakkumine_uus)
     loendaja=loendaja+1
-print("Parool saadi {}-ndal katsel ning see on: {}".format(loendaja,pakkumine))
+    print("Katse iteratsioon: "+ str(loendaja)+". Pakutud parool: " +str(pakkumine))
+end=time.time()
+print("Parool saadi {}-ndal katsel ning see on: {}.\nAega kulus: {} sekundit.".format(loendaja,pakkumine,(round((end-start),2))))
+
