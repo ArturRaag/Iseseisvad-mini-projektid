@@ -10,7 +10,7 @@ import PIL.Image
 ASCII_sümbolid = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", " "]
 
 
-def resize(image, new_width=120):
+def resize(image, new_width=100):
     width, height= image.size
     ratio = height / width
     new_height=int(new_width*ratio)
@@ -26,7 +26,7 @@ def image_to_ascii(image):
     characters="".join([ASCII_sümbolid[pixel//25] for pixel in pixels])
     return (characters)
 
-def main(new_width=120):
+def main(new_width=100):
     path=input("Sisesta pildi asukoht: \n")
     try:
         image= PIL.Image.open(path)
