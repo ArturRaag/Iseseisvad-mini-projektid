@@ -8,6 +8,7 @@ from datetime import datetime
 from datetime import date
 
 puhke_aeg=20
+interaktsioon=False
 
 def teisendus(x):
     x=x.replace("-","_")
@@ -20,7 +21,6 @@ faili_nimi=päev+extension
 
 def timer():
     global aeg
-    
     aeg = puhke_aeg
     while aeg !=0:
         aeg = aeg-1
@@ -40,6 +40,8 @@ while True:
     new_state_right=win32api.GetKeyState(0x02)
     
     if new_state_left != state_left:
+        if aeg==0:
+            timer_thread.start()
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         print("Vajutati: hiire VASAKUT nuppu. Ajahetk:", dt_string)
@@ -47,9 +49,13 @@ while True:
             print("Klõps: hiire VASAK. Ajahetk:",dt_string ,file=f)
         aeg=puhke_aeg
         state_left= new_state_left
+        interaktsioon=True
+        print("interaktsioon", interaktsioon)
         
         
-    if new_state_right != state_right:
+    elif new_state_right != state_right:
+        if aeg==0:
+            timer_thread.start()
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         print("Vajutati: hiire PAREMAT nuppu. Ajahetk:", dt_string)
@@ -57,8 +63,10 @@ while True:
             print("Klõps: hiire PAREM. Ajahetk:",dt_string ,file=f)
         aeg=puhke_aeg
         state_right=new_state_right
+        interaktsioon=True
+        print("interaktsioon:", interaktsioon)
         
-    if aeg ==0:
+    elif aeg == 0 and interaktsioon==True:
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         print("Avalehel tagasi. Ajahetk:", dt_string)
@@ -67,8 +75,12 @@ while True:
         #pane kõik kinni, ava leht uuesti ning pane timer otsast peale käima.
         os.system("taskkill /im chrome.exe /f")
         webbrowser.open("https://sites.google.com/ristiku.tln.edu.ee/garderoobi/")
-        timer_thread = threading.Thread(target=timer)
-        timer_thread.start()
+        aeg = puhke_aeg
+        interaktsioon=False
+        print("interaktsioon",interaktsioon)
+
+    elif aeg==0 and interaktsioon==False:
+        aeg=puhke_aeg
         
     if keyboard.is_pressed('q'): # if key 'q' is pressed
         now = datetime.now()
@@ -77,4 +89,5 @@ while True:
         with open(faili_nimi, "a") as f:
             print("Programm katkestati! Ajahetk:",dt_string ,file=f)
         break 
+        
         
